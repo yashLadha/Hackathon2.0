@@ -1,3 +1,4 @@
+from core.helper import searcher
 from core.models import User
 
 
@@ -21,11 +22,44 @@ def get_family_by_aadhar(aadhar_no):
     return user_list
 
 
-def get_family_by_id(family_id_):
+def get_family_by_id(family_id):
     """Get the details of family by family id"""
-    family = User.es.search(family_id_)
+    family = User.es.search(family_id)
     return family
 
 
-def get_id_by_pincode(pincode):
-    pass
+def get_user_by_dbid(dbid):
+    es = searcher.get_search()
+    res = es.search(index='django', body={
+        'query': {
+            'match': {
+                'id': dbid
+            }
+        }
+    })
+    return res['hits']['hits'][0]
+
+
+def get_bhamashah_id(userId):
+    es = searcher.get_search()
+    res = es.search(index='bhamashah', body={
+        'query': {
+            'match': {
+                'user': userId
+            }
+        }
+    })
+    return res['hits']['hits'][0]
+
+
+def get_ids_by_pincode(pincode):
+    """Get hof details from pincode"""
+    es = searcher.get_search()
+    res = es.search(index='location', body={
+        'query': {
+            "match": {
+                'pincode': pincode
+            }
+        }
+    })
+    return res
