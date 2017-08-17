@@ -22,9 +22,9 @@ def get_family_by_aadhar(aadhar_no):
     return user_list
 
 
-def get_family_by_id(family_id_):
+def get_family_by_id(family_id):
     """Get the details of family by family id"""
-    family = User.es.search(family_id_)
+    family = User.es.search(family_id)
     return family
 
 

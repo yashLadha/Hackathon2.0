@@ -4,25 +4,25 @@ from __future__ import unicode_literals
 import json
 
 from django.http import JsonResponse
-from django.shortcuts import HttpResponse
 
 from core.helper import query_helpers as qh
-from extractors import family_detail
-from webHelper import jsonData
 
 
-def family_details(request):
+def family_details(request, family_id):
     """Extracts the family details and other features"""
-    data = jsonData.get_json_data(
-        'https://apitest.sewadwaar.rajasthan.gov.in/app/live/Service/family/'
-        'details/1067-7PVQ-28383?client_id=ad7288a4-7764-436d-a727-783a977f1fe1'
-    )
-    if data is not None:
-        family_list = family_detail.family_detail_extractor(data)
-        if family_list is not None:
-            print family_list
-            return JsonResponse(json.loads(json.dumps(family_list)))
-    return HttpResponse('No data fetched for family list')
+    results = qh.get_family_by_id(family_id)
+    res = []
+    for item in results:
+        user = {
+            'name_eng': item['name_eng'],
+            'aadhaar_id': item['aadhaar_id'],
+            'dob': item['dob'],
+            'hof': item['hof'],
+            'name_hnd': item['name_hnd'],
+            'gender': item['gender']
+        }
+        res.append(user)
+    return JsonResponse(json.loads(json.dumps(res)), safe=False)
 
 
 def location_details(request, pincode):
