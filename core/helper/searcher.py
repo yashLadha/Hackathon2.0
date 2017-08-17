@@ -1,10 +1,6 @@
 from elasticsearch import Elasticsearch
 
 
-def main():
+def get_search():
     es = Elasticsearch()
     return es
-
-
-if __name__ == '__main__':
-    main()

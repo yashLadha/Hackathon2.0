@@ -1,7 +1,10 @@
+import json
 from datetime import datetime
 
+from django.core import serializers
 from elasticsearch import NotFoundError
 
+from core.helper import searcher
 from core.models import User, BhamashahIndex
 
 
@@ -109,4 +112,12 @@ def push_user(cnt, family_list, items, user, user_json, hof, family_id):
         bi.user = user
         bi.bhamashah_id = items['BHAMASHAH_ID']
         bi.save()
+
+        json_data = json.loads(serializers.serialize('json', [bi, ]))
+        for item in json_data:
+            data = item['fields']
+            data['pk'] = bi.id
+            res = searcher.get_search().index(index='bhamashah', doc_type='bhamashah_index', id=bi.id,
+                                              body=data)
+            print(res['created'])
     family_list[cnt] = user_json

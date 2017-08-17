@@ -1,3 +1,4 @@
+from core.helper import searcher
 from core.models import User
 
 
@@ -28,4 +29,11 @@ def get_family_by_id(family_id_):
 
 
 def get_id_by_pincode(pincode):
+    # TODO : Implement the query for that
+    es = searcher.get_search()
+    es.search(index='django', body={
+        'query': {
+            "match_all": {}
+        }
+    })
     pass

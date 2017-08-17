@@ -6,7 +6,9 @@ from django_elasticsearch.models import EsIndexable
 
 
 class User(EsIndexable, models.Model):
-    """Model representation of the User"""
+    """Model representation of the User
+    Index: django
+    """
     name_eng = models.CharField(default=None, max_length=150, blank=False, null=False)
     aadhaar_id = models.CharField(default=None, max_length=12)
     m_id = models.IntegerField(default=0)
@@ -24,7 +26,9 @@ class User(EsIndexable, models.Model):
         return User.es.count()
 
 
-class BhamashahIndex(EsIndexable, models.Model):
-    """Model representation for Bhamashah lookup"""
+class BhamashahIndex(models.Model):
+    """Model representation for Bhamashah lookup
+    Index : Bhamashah
+    """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     bhamashah_id = models.CharField(max_length=15, default='')
