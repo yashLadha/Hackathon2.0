@@ -22,3 +22,9 @@ class User(EsIndexable, models.Model):
     @staticmethod
     def get_count_user():
         return User.es.count()
+
+
+class BhamashahIndex(EsIndexable, models.Model):
+    """Model representation for Bhamashah lookup"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    bhamashah_id = models.CharField(max_length=15, default='')

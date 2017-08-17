@@ -2,7 +2,7 @@ from datetime import datetime
 
 from elasticsearch import NotFoundError
 
-from core.models import User
+from core.models import User, BhamashahIndex
 
 
 def preprocess_date(date_):
@@ -104,4 +104,9 @@ def push_user(cnt, family_list, items, user, user_json, hof, family_id):
     user.family_id = family_id
     user_json['FAMILY_ID'] = family_id
     user.save()
+    if hof:
+        bi = BhamashahIndex()
+        bi.user = user
+        bi.bhamashah_id = items['BHAMASHAH_ID']
+        bi.save()
     family_list[cnt] = user_json
