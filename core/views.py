@@ -41,3 +41,21 @@ def location_details(request, pincode):
         users_list.append(user)
     print users_list
     return JsonResponse(json.loads(json.dumps(users_list)), safe=False)
+
+
+def family_aadhar(request, aadhar_id):
+    """Finds the family details by aadhar of the hof family designated"""
+    results = qh.get_family_by_aadhar(aadhar_id)
+    print results
+    res = []
+    for item in results:
+        user = {
+            'name_eng': item['name_eng'],
+            'aadhaar_id': item['aadhaar_id'],
+            'dob': item['dob'],
+            'hof': item['hof'],
+            'name_hnd': item['name_hnd'],
+            'gender': item['gender']
+        }
+        res.append(user)
+    return JsonResponse(json.loads(json.dumps(res)), safe=False)
