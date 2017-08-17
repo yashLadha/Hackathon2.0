@@ -39,4 +39,4 @@ python manage.py runserver
 Now the server is well and good running on your localhost machine and connect your android device and your 
 PC on the same network so as that you can use the api. I hardcoded the url information in my app so that 
 it can fetch from the server using elastic search backend. However using elastic search as cloud service
-is very expensive, so we haven't deployed it on cloud.
+is very expensive, so we haven't deployed it on cloud. For Android app demonstrating the [server](https://github.com/yashLadha/Hackathon2.0_APP)
