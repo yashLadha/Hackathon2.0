@@ -28,7 +28,7 @@ class User(EsIndexable, models.Model):
 
 class BhamashahIndex(models.Model):
     """Model representation for Bhamashah lookup
-    Index : Bhamashah
+    Index : bhamashah
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     bhamashah_id = models.CharField(max_length=15, default='')

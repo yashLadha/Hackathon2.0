@@ -28,11 +28,38 @@ def get_family_by_id(family_id_):
     return family
 
 
-def get_id_by_pincode(pincode):
+def get_user_by_dbid(dbid):
     es = searcher.get_search()
-    es.search(index='django', body={
+    res = es.search(index='django', body={
         'query': {
-            "match_all": {}
+            'match': {
+                'id': dbid
+            }
         }
     })
-    pass
+    return res['hits']['hits'][0]
+
+
+def get_bhamashah_id(userId):
+    es = searcher.get_search()
+    res = es.search(index='bhamashah', body={
+        'query': {
+            'match': {
+                'user': userId
+            }
+        }
+    })
+    return res['hits']['hits'][0]
+
+
+def get_ids_by_pincode(pincode):
+    """Get hof details from pincode"""
+    es = searcher.get_search()
+    res = es.search(index='location', body={
+        'query': {
+            "match": {
+                'pincode': pincode
+            }
+        }
+    })
+    return res
