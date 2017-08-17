@@ -22,7 +22,7 @@ one index for querying.
 ### Execution
 
 You need to have elasticsearch ruuning in the background for the searching backend on the local machine.
-For downloading the elasticsearch and running it, you can find that in the official documentation
+For downloading the elasticsearch and running it, you can find that in the official [documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html)
 
 * You need to have database set up according to credentials mentioned in settings.py however you can alter them
 as per the need.
