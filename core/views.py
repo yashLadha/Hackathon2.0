@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import json
 
 from django.shortcuts import HttpResponse
+from django.http import JsonResponse
 
 from extractors import family_detail
 from webHelper import jsonData
@@ -19,5 +20,5 @@ def family_details(request):
         family_list = family_detail.family_detail_extractor(data)
         if family_list is not None:
             print family_list
-            return HttpResponse(json.dumps(family_list))
+            return JsonResponse(json.loads(json.dumps(family_list)))
     return HttpResponse('No data fetched for family list')
