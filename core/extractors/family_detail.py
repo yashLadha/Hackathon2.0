@@ -5,7 +5,7 @@ from django.core import serializers
 from elasticsearch import NotFoundError
 
 from core.helper import searcher
-from core.models import User, BhamashahIndex
+from core.models import User, BhamashahIndex, LocHof
 
 
 def preprocess_date(date_):
@@ -113,11 +113,21 @@ def push_user(cnt, family_list, items, user, user_json, hof, family_id):
         bi.bhamashah_id = items['BHAMASHAH_ID']
         bi.save()
 
-        json_data = json.loads(serializers.serialize('json', [bi, ]))
-        for item in json_data:
-            data = item['fields']
-            data['pk'] = bi.id
-            res = searcher.get_search().index(index='bhamashah', doc_type='bhamashah_index', id=bi.id,
-                                              body=data)
-            print(res['created'])
+        loc = LocHof()
+        loc.user = user
+        loc.pincode = items['PIN_CODE']
+        loc.save()
+
+        index_creator(loc, 'location', 'location_index')
+        index_creator(bi, 'bhamashah', 'bhamashah_index')
     family_list[cnt] = user_json
+
+
+def index_creator(bi, index_name, index_type):
+    json_data = json.loads(serializers.serialize('json', [bi, ]))
+    for item in json_data:
+        data = item['fields']
+        data['pk'] = bi.id
+        res = searcher.get_search().index(index=index_name, doc_type=index_type, id=bi.id,
+                                          body=data)
+        print(res['created'])

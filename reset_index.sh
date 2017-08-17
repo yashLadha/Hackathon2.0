@@ -27,3 +27,16 @@ curl -XPUT 'localhost:9200/bhamashah?pretty' -H 'Content-Type: application/json'
     }
 }
 '
+
+echo ''
+
+curl -XPUT 'localhost:9200/location?pretty' -H 'Content-Type: application/json' -d'
+{
+    "settings" : {
+        "index" : {
+            "number_of_shards" : 5,
+            "number_of_replicas" : 1
+        }
+    }
+}
+'

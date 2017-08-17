@@ -32,3 +32,11 @@ class BhamashahIndex(models.Model):
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     bhamashah_id = models.CharField(max_length=15, default='')
+
+
+class LocHof(models.Model):
+    """Model representation for location of hof
+    Index: location
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    pincode = models.IntegerField()
