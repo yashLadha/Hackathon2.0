@@ -1,5 +1,5 @@
 elasticsearch
-Django==1.10.7
+Django==1.11.29
 django-elasticsearch==0.5
 djangorestframework==3.6.3
 psycopg2==2.7.3
